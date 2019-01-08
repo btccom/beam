@@ -92,7 +92,8 @@ private:
         const std::string&,
         const Merkle::Hash& input, const Block::PoW& pow,
         const BlockFound& callback,
-        const CancelCallback& cancelCallback
+        const CancelCallback& cancelCallback,
+        const size_t height
     ) override;
 
     void get_last_found_block(std::string& jobID, Block::PoW& pow) override;

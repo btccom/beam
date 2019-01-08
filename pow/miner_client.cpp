@@ -91,7 +91,8 @@ private:
         _miner->new_job(
             _lastJobID, _lastJobInput, pow,
             BIND_THIS_MEMFN(on_block_found),
-            []() { return false; }
+            []() { return false; },
+            job.height
         );
 
         return true;

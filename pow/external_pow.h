@@ -42,7 +42,8 @@ public:
         const Merkle::Hash& input,
         const Block::PoW& pow,
         const BlockFound& callback,
-        const CancelCallback& cancelCallback) = 0;
+        const CancelCallback& cancelCallback,
+        const size_t height) = 0;
 
     virtual void get_last_found_block(std::string& jobID, Block::PoW& pow) = 0;
 

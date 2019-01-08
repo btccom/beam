@@ -42,7 +42,8 @@ void gen_new_job() {
         std::to_string(++idInt),
         hash, POW,
         &got_new_block,
-        []() { return false; }
+        []() { return false; },
+        12345
     );
 
     feedJobsTimer->start(TIMER_MSEC, false, &gen_new_job);

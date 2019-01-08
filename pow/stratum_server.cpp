@@ -141,14 +141,15 @@ void Server::new_job(
     const Merkle::Hash& input,
     const Block::PoW& pow,
     const BlockFound& callback,
-    const CancelCallback& /* cancelCallback */
+    const CancelCallback& /* cancelCallback */,
+    const size_t height
 ) {
     _recentJob.id = id;
     _recentResult.onBlockFound = callback;
 
     LOG_INFO() << STS << "new job " << id << " will be sent to " << _connections.size() << " connected peers";
 
-    Job jobMsg(id, input, pow);
+    Job jobMsg(id, input, pow, height);
     append_json_msg(_fw, jobMsg);
 	_recentJob.msg.swap(_currentMsg);
     _currentMsg.clear();
