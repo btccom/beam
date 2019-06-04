@@ -3862,22 +3862,24 @@ IExternalPOW::BlockFoundResult Node::Miner::OnMinedExternal()
 	pTask->m_Hdr.m_PoW.m_Nonce = POW.m_Nonce;
 	pTask->m_Hdr.m_PoW.m_Indices = POW.m_Indices;
 
+    Block::SystemState::ID id;
+    pTask->m_Hdr.get_ID(id);
+
     if (!pTask->m_Hdr.IsValidPoW())
     {
         LOG_INFO() << "invalid solution from external miner";
-        return IExternalPOW::solution_rejected;
+        return {IExternalPOW::solution_rejected, id.m_Hash};
     }
 
     IExternalPOW::BlockFoundResult result(IExternalPOW::solution_accepted);
     Merkle::Hash hv;
     pTask->m_Hdr.get_Hash(hv);
-    result._blockhash = to_hex(hv.m_pData, hv.nBytes);
+    result.blockhash = to_hex(hv.m_pData, hv.nBytes);
 
 	m_pTask = pTask;
     *m_pTask->m_pStop = true;
     m_pEvtMined->post();
-
-    return result;
+    return {IExternalPOW::solution_accepted, id.m_Hash};
 }
 
 void Node::Miner::OnMined()
