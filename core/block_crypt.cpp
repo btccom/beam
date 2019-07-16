@@ -16,6 +16,7 @@
 #include <chrono>
 #include <sstream>
 #include "block_crypt.h"
+#include "utility/logger.h"
 
 namespace beam
 {
@@ -1258,9 +1259,14 @@ namespace beam
 		if (Rules::get().FakePoW)
 			return true;
 
-		Merkle::Hash hv;
+		Merkle::Hash hv, blockHash, blockPowHash;
 		get_HashForPoW(hv);
-		return m_PoW.IsValid(hv.m_pData, hv.nBytes, m_Height);
+		get_Hash(blockHash);
+		bool valid = m_PoW.IsValid(hv.m_pData, hv.nBytes, m_Height, blockPowHash);
+		blockPowHash.Reverse();
+
+		LOG_INFO() << "Block Hash " << m_Height << " " << blockPowHash.ToString() << " " << blockHash.ToString() << " " << (valid ? "valid" : "invalid");
+		return valid;
 	}
 
 	bool Block::SystemState::Full::GeneratePoW(const PoW::Cancel& fnCancel)

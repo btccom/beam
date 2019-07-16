@@ -300,6 +300,14 @@ namespace beam
 			_Div(m_pData, nBytes, a.m_pData, a.nBytes, b.m_pData, b.nBytes, mul.m_pData, tmp.m_pData);
 		}
 
+		void Reverse() {
+			for (size_t i=0, j=nBytes-1; i<j; i++, j--) {
+				char t = m_pData[i];
+				m_pData[i] = m_pData[j];
+				m_pData[j] = t;
+			}
+		}
+
 		// helper, for uniform random generation within specific bounds
 		struct Threshold
 		{
@@ -327,6 +335,12 @@ namespace beam
 		void Print(char* sz) const
 		{
 			_Print(m_pData, nBytes, sz);
+		}
+
+		std::string ToString() {
+			std::string str(nTxtLen, '0');
+			Print((char*)str.data());
+			return str;
 		}
 
 		friend std::ostream& operator << (std::ostream& s, const uintBig_t& x)

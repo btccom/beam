@@ -500,6 +500,7 @@ namespace beam
 			Difficulty m_Difficulty;
 
 			bool IsValid(const void* pInput, uint32_t nSizeInput, Height) const;
+			bool IsValid(const void* pInput, uint32_t nSizeInput, Height, Merkle::Hash &hv) const;
 
 			using Cancel = std::function<bool(bool bRetrying)>;
 			// Difficulty and Nonce must be initialized. During the solution it's incremented each time by 1.
