@@ -962,7 +962,7 @@ namespace beam
 
 		ZeroObject(pForks);
 
-		pForks[1].m_Height = 321321; // mainnet hard fork
+		pForks[1].m_Height = 50; // mainnet hard fork
 
 		// future forks
 		for (size_t i = 2; i < _countof(pForks); i++)
